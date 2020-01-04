@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.apirest.dto.UserDTO;
 import br.com.apirest.entities.User;
 import br.com.apirest.repository.UserRepository;
+import br.com.apirest.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -20,10 +21,9 @@ public class UserService {
 		return repository.findAll();
 	}
 
-	public Optional<User> findById(String id) {
+	public User findById(String id) {
 		Optional<User> obj = repository.findById(id);
-
-		return obj;
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 
 	public User insert(User obj) {
@@ -34,4 +34,8 @@ public class UserService {
 		return new User(dto.getId(), dto.getName(), dto.getEmail());
 	}
 
+	public void deleteById(String id) {
+		findById(id);
+		repository.deleteById(id);
+	}
 }
