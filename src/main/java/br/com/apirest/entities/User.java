@@ -16,17 +16,15 @@ public class User implements Serializable {
 
 	@Id
 	private String id;
-
 	private String name;
-
 	private String email;
+
+	@DBRef(lazy = true)
+	private List<Post> posts = new ArrayList<>();
 
 	public User() {
 
 	}
-
-	@DBRef(lazy = true)
-	private List<Post> posts = new ArrayList<>();
 
 	public User(String id, String name, String email) {
 		super();
@@ -88,7 +86,7 @@ public class User implements Serializable {
 		return true;
 	}
 
-	public void inserirPosts(List<Post> posts) {
+	public void insertPosts(List<Post> posts) {
 		for (Post obj : posts) {
 			this.posts.add(obj);
 		}
