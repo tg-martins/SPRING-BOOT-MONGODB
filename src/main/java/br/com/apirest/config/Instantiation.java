@@ -1,8 +1,6 @@
 package br.com.apirest.config;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
@@ -43,6 +41,10 @@ public class Instantiation implements CommandLineRunner {
 
 		 
 		postRepository.saveAll(Arrays.asList(post1, post2));
+		
+		maria.inserirPosts(Arrays.asList(post1, post2));
+		
+		userRepository.save(maria);
 	}
 
 }

@@ -1,8 +1,12 @@
 package br.com.apirest.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -20,6 +24,9 @@ public class User implements Serializable {
 	public User() {
 
 	}
+
+	@DBRef(lazy = true)
+	private List<Post> posts = new ArrayList<>();
 
 	public User(String id, String name, String email) {
 		super();
@@ -52,6 +59,10 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public List<Post> getPosts() {
+		return Collections.unmodifiableList(posts);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,4 +88,10 @@ public class User implements Serializable {
 		return true;
 	}
 
+	public void inserirPosts(List<Post> posts) {
+		for (Post obj : posts) {
+			this.posts.add(obj);
+		}
+
+	}
 }
